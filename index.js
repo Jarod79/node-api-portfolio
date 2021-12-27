@@ -9,7 +9,7 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://jarod79.github.io/portfolio',
   credentials: true,
   optionSuccessStatus: 200,
   maxAge: 3600,
