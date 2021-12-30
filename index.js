@@ -9,7 +9,7 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'https://jarod79.github.io',
+  origin: 'https://jarod79.github.io' || 'https://porfolioea.herokuapp.com',
   credentials: true,
   optionSuccessStatus: 200,
   maxAge: 3600,
