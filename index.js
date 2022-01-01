@@ -49,8 +49,8 @@ app.post('/', (req, res) => {
     },
   });
   const mailOptions = {
-    from: process.env.EMAIL,
-    to: `${mail}`,
+    from: `${mail}`,
+    to: process.env.EMAIL,
     subject: 'Message portfolio',
     text: `Nom: ${prenom} ${nom},
     Email: ${mail},
