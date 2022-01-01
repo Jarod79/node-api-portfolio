@@ -28,12 +28,12 @@ app.post('/', (req, res) => {
       pass: process.env.PASSWORD,
     },
   });
-
+  console.log(mail);
   const mailOptions = {
     from: `${mail}`,
     to: process.env.EMAIL,
     subject: 'Message portfolio',
-    text: `nom: ${prenom} ${nom},
+    text: `Nom: ${prenom} ${nom},
     Email: ${mail},
     Message: ${message}`,
   };
