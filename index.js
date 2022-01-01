@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+const { text } = require('express');
 require('dotenv').config();
 
 const port = process.env.PORT || 8000;
@@ -29,21 +30,27 @@ app.post('/', (req, res) => {
     },
   });
 
-  const mailOptions = {
-    from: mail,
-    to: process.env.EMAIL,
-    text: `Nom: ${prenom} ${nom}
-    Email: ${mail} 
-    Message: ${message}`,
-  };
+  // const mailOptions = {
+  //   from: mail,
+  //   to: process.env.EMAIL,
+  //   text: `Nom: ${prenom} ${nom}
+  //   Email: ${mail} 
+  //   Message: ${message}`,
+  // };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(`Email sent:  ${info.response}`);
-    }
-  });
+  transporter.sendMail(() => {
+    ({
+      from: mail,
+      to: process.env.EMAIL,
+      subject: 'Message',
+      Nom: prenom + nom,
+      Email: mail,
+      text: message,
+    }),
+    (err, info) => {
+      console.log(info.envelope);
+      console.log(info.messageId);
+  };
 
   res.status(200).send();
 });
