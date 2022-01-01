@@ -29,26 +29,22 @@ app.post('/', (req, res) => {
     },
   });
 
-  // const mailOptions = {
-  //   from: mail,
-  //   to: process.env.EMAIL,
-  //   text: `Nom: ${prenom} ${nom}
-  //   Email: ${mail} 
-  //   Message: ${message}`,
-  // };
-
-  transporter.sendMail(() => {
-    ({
-      from: mail,
-      to: process.env.EMAIL,
-      text: `Nom: ${prenom} ${nom}
-    Email: ${mail} 
-    Message: ${message}`,
-    }),
-    (err, info) => {
-      console.log(info.envelope);
-      console.log(info.messageId);
+  const mailOptions = {
+    from: mail,
+    to: process.env.EMAIL,
+    subject: 'Message',
+    Nom: `${prenom} ${nom}`,
+    Email: `${mail}`,
+    text: `${message}`,
   };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(`Email sent:  ${info.response}`);
+    }
+  });
 
   res.status(200).send();
 });
