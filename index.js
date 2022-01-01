@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-const { text } = require('express');
 require('dotenv').config();
 
 const port = process.env.PORT || 8000;
@@ -42,10 +41,9 @@ app.post('/', (req, res) => {
     ({
       from: mail,
       to: process.env.EMAIL,
-      subject: 'Message',
-      Nom: prenom + nom,
-      Email: mail,
-      text: message,
+      text: `Nom: ${prenom} ${nom}
+    Email: ${mail} 
+    Message: ${message}`,
     }),
     (err, info) => {
       console.log(info.envelope);
