@@ -30,12 +30,12 @@ app.post('/', (req, res) => {
   });
 
   const mailOptions = {
-    from: mail,
+    from: `${mail}`,
     to: process.env.EMAIL,
-    subject: 'Message',
-    Nom: `${prenom} ${nom}`,
-    Email: `${mail}`,
-    text: `${message}`,
+    subject: 'Message portfolio',
+    text: `nom: ${prenom} ${nom},
+    Email: ${mail},
+    Message: ${message}`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
