@@ -27,7 +27,6 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',
     'https://jarod79.github.io',
-    'https://portfolio-eric-arrijuria.herokuapp.com',
   ],
   credentials: true,
   optionSuccessStatus: 200,
