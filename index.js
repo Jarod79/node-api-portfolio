@@ -13,15 +13,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 const port = process.env.PORT || 8000;
 app.use(express.json());
 
+app.get('/', (req,res)=>{
+  res.send('Hello !!!')
+})
+
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://jarod79.github.io'],
   credentials: true,
   optionSuccessStatus: 200,
   maxAge: 3600,
 };
+
 app.use(cors(corsOptions));
 
-app.post('/', (req, res) => {
+
+
+app.post('/mail/send', (req, res) => {
   const { prenom, nom, mail, message } = req.body;
   const transporter = nodemailer.createTransport({
     service: 'gmail',
