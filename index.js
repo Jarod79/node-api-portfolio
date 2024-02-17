@@ -18,7 +18,7 @@ app.get('/', (req,res)=>{
 })
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://jarod79.github.io'],
+  origin: ['http://localhost:3000', 'https://jarod79.github.io','https://portfolio-next-js-jet-eight.vercel.app'],
   credentials: true,
   optionSuccessStatus: 200,
   maxAge: 3600,
