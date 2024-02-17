@@ -3,31 +3,18 @@ const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-const { google } = require('googleapis');
+const path = require('path');
 
-const { OAuth2 } = google.auth;
 require('dotenv').config();
 
-const oauth2Client = new OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  'https://developers.google.com/oauthplayground'
-);
-
-oauth2Client.setCredentials({
-  refresh_token: process.env.REFRESH_TOKEN,
-});
-
-const accessToken = oauth2Client.getAccessToken();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const port = process.env.PORT || 8000;
 app.use(express.json());
 
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'https://jarod79.github.io',
-  ],
+  origin: ['http://localhost:3000', 'https://jarod79.github.io'],
   credentials: true,
   optionSuccessStatus: 200,
   maxAge: 3600,
@@ -39,12 +26,8 @@ app.post('/', (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      type: 'OAuth2',
       user: process.env.EMAIL,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: process.env.REFRESH_TOKEN,
-      accessToken,
+      pass: process.env.PASSWORD,
     },
   });
   const mailOptions = {
