@@ -3,19 +3,11 @@ const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-const path = require('path');
 
 require('dotenv').config();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-
 const port = process.env.PORT || 8000;
 app.use(express.json());
-
-app.get('/', (req,res)=>{
-  res.send('Hello !!!')
-})
 
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://jarod79.github.io','https://portfolio-next-js-jet-eight.vercel.app'],
@@ -28,7 +20,7 @@ app.use(cors(corsOptions));
 
 
 
-app.post('/mail/send', (req, res) => {
+app.post('/mail/send', async (req, res) => {
   const { prenom, nom, mail, message } = req.body;
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -37,6 +29,7 @@ app.post('/mail/send', (req, res) => {
       pass: process.env.PASSWORD,
     },
   });
+ 
   const mailOptions = {
     from: `${mail}`,
     to: process.env.EMAIL,
@@ -45,15 +38,17 @@ app.post('/mail/send', (req, res) => {
     Email: ${mail},
     Message: ${message}`,
   };
-
+  await new Promise((resolve, reject) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
+      reject(err)
     } else {
       console.log(`Email sent:  ${info.response}`);
+      resolve(info)
     }
   });
-
+  });
   res.status(200).send();
 });
 
