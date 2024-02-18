@@ -10,15 +10,13 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://jarod79.github.io','https://portfolio-next-js-jet-eight.vercel.app'],
+  origin: [process.env.URL_ORIGIN_AUTHORIZATION,process.env.URL_ORIGIN_AUTHORIZATION_VERCEL,process.env.URL_ORIGIN_AUTHORIZATION_GIT],
   credentials: true,
   optionSuccessStatus: 200,
   maxAge: 3600,
 };
 
 app.use(cors(corsOptions));
-
-
 
 app.post('/mail/send', async (req, res) => {
   const { prenom, nom, mail, message } = req.body;
